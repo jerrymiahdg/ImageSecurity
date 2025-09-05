@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-function addSaltAndPepperNoise(intensity = 1, originalImageData, ctx) {
+function addSaltAndPepperNoise(intensity = 0.05, originalImageData, ctx) {
   if (!originalImageData) return;
 
   // Create a copy of the original data to work on
@@ -52,9 +52,14 @@ export default function AddNoise({ imageFile, setImageUrl, trigger }) {
 
         ctx.drawImage(img, 0, 0);
 
-        originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const originalImageData = ctx.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
 
-        addSaltAndPepperNoise(0.05, originalImageData, ctx);
+        addSaltAndPepperNoise(0.01, originalImageData, ctx);
 
         const fileType =
           imageFile.type === "image/png" ? "image/png" : "image/jpeg";

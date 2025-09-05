@@ -60,7 +60,7 @@ const App = () => {
                       className="mt-4 p-3 rounded bg-blue-500 text-white"
                       onClick={() => setTriggerProcess((prev) => !prev)}
                     >
-                      Remove Metadata
+                      Untracability - Remove Metadata
                     </button>
                   </>
                 )}
@@ -75,7 +75,7 @@ const App = () => {
                       className="mt-4 p-3 rounded bg-blue-500 text-white"
                       onClick={() => setNoiseTrigPro((prev) => !prev)}
                     >
-                      Add Noise
+                      Anti Reverse Search - Add Noise
                     </button>
                   </>
                 )}
