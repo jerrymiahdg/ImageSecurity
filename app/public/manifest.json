@@ -3,6 +3,9 @@
   "name": "ImageSecurity",
   "version": "1.0.0",
   "description": "A simple React app as a Chrome extension",
+  "icons": {
+    "128": "icon128.png"
+  },
   "action": {
     "default_popup": "index.html"
   },

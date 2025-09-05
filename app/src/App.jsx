@@ -1,6 +1,7 @@
 import { useState } from "react";
 import RemoveMetaData from "./RemoveMetadata";
 import AddNoise from "./AddNoise";
+import InvertColors from "./InvertColors";
 
 const App = () => {
   const [dropdownShowing, setDropdownShowing] = useState(false);
@@ -8,6 +9,7 @@ const App = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [triggerProcess, setTriggerProcess] = useState(false);
   const [noiseTrigPro, setNoiseTrigPro] = useState(false);
+  const [invertTrigger, setInvertTrigger] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownShowing((state) => !state);
@@ -21,7 +23,7 @@ const App = () => {
     const reader = new FileReader();
     reader.onload = (event) => setImageUrl(event.target.result);
     reader.readAsDataURL(file);
-  };
+  }; // i assume this is old
 
   async function downloadBlob(data, filename, type) {
     const blob = new Blob([data], { type: type });
@@ -44,7 +46,23 @@ const App = () => {
   }
 
   const onDownload = () => {
-    downloadImageFromURL("path/to/image.png", "downloaded_image.png");
+    downloadImageFromURL(imageUrl, "downloaded_image.png");
+  };
+
+  const copyImageToClipboard = async (imageUrl, filename) => {
+    const response = await fetch(imageUrl);
+    console.log(response);
+    const blob = await response.blob();
+    console.log(blob);
+    downloadBlob(blob, filename, blob.type);
+    const clipboardItem = new ClipboardItem({ [blob.type]: blob });
+    console.log(clipboardItem);
+    // 3. Write the item to the clipboard
+    await navigator.clipboard.write([clipboardItem]);
+  };
+
+  const onCopy = () => {
+    copyImageToClipboard(imageUrl, "downloaded_image.png");
   };
 
   return (
@@ -71,7 +89,10 @@ const App = () => {
               >
                 download
               </button>
-              <button className="bg-blue-500 text-white p-3 rounded-md">
+              <button
+                className="bg-blue-500 text-white p-3 rounded-md"
+                onClick={onCopy}
+              >
                 copy to clipboard
               </button>
             </div>
@@ -115,6 +136,21 @@ const App = () => {
                       onClick={() => setNoiseTrigPro((prev) => !prev)}
                     >
                       Anti Reverse Search - Add Noise
+                    </button>
+                  </>
+                )}
+                {imageFile && (
+                  <>
+                    <InvertColors
+                      imageFile={imageFile}
+                      setImageUrl={setImageUrl}
+                      trigger={invertTrigger}
+                    />
+                    <button
+                      className="mt-4 p-3 rounded bg-purple-500 text-white"
+                      onClick={() => setInvertTrigger((prev) => !prev)}
+                    >
+                      Invert / Uninvert Colors
                     </button>
                   </>
                 )}
