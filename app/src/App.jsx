@@ -23,14 +23,12 @@ const App = () => {
       <h1 className="text-5xl font-bold font-ss">ImageSecurity</h1>
       <div className="flex flex-col items-center w-md gap-5">
         <input
-          className="p-10 w-full bg-white/50 rounded-md"
+          className="p-10 w-full bg-white/20 rounded-md"
           type="file"
           accept="image/*"
           onChange={handleFileChange}
         />
-        {imageFile && (
-          <RemoveMetaData imageFile={imageFile} setImageUrl={setImageUrl} />
-        )}
+
         {imageUrl && (
           <img
             src={imageUrl}
@@ -47,10 +45,23 @@ const App = () => {
               process image (options)
             </button>
             {dropdownShowing && (
-              <div className="flex flex-col gap-2 p-2 bg-white/10 rounded-md transition-all">
-                <button className="rounded-md p-3 bg-white/50">
+              <div className="flex flex-col gap-2 p-2 bg-white/40 rounded-md transition-all">
+                {/*
+                <button
+                  className="rounded-md p-3 bg-white/50"
+                  onClick={() =>
+                    imageFile && (
+                      <RemoveMetaData
+                        imageFile={imageFile}
+                        setImageUrl={setImageUrl}
+                      />
+                    )
+                  }
+                >
                   remove metadata
                 </button>
+                */}
+
                 <button className="rounded-md p-3 bg-white/50">
                   add noise
                 </button>
