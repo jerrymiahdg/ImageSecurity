@@ -1,4 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Libertinus+Sans:ital,wght@0,400;0,700;1,400&family=Story+Script&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-ls: "Libertinus Sans", sans-serif;
+  --font-ss: "Story Script", sans-serif;
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -6,8 +12,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: "black";
+  background: none;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
