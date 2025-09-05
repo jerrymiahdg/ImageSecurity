@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 
-function addUniformNoise(amount = 50, originalImageData, ctx) {
+function addSaltAndPepperNoise(intensity = 1, originalImageData, ctx) {
   if (!originalImageData) return;
 
+  // Create a copy of the original data to work on
   let imageData = new ImageData(
     new Uint8ClampedArray(originalImageData.data),
     originalImageData.width,
@@ -11,14 +12,25 @@ function addUniformNoise(amount = 50, originalImageData, ctx) {
   let data = imageData.data;
 
   for (let i = 0; i < data.length; i += 4) {
-    // Generate a random value between -amount and +amount
-    const noise = (Math.random() - 0.5) * 2 * amount;
+    // Generate a random number between 0 and 1
+    const random = Math.random();
 
-    data[i] = clamp(data[i] + noise); // R
-    data[i + 1] = clamp(data[i + 1] + noise); // G
-    data[i + 2] = clamp(data[i + 2] + noise); // B
+    // If the random number is less than intensity/2, set pixel to black (pepper)
+    if (random < intensity / 2) {
+      data[i] = 0; // R
+      data[i + 1] = 0; // G
+      data[i + 2] = 0; // B
+    }
+    // If the random number is greater than 1 - intensity/2, set pixel to white (salt)
+    else if (random > 1 - intensity / 2) {
+      data[i] = 255; // R
+      data[i + 1] = 255; // G
+      data[i + 2] = 255; // B
+    }
+    // Otherwise, leave the pixel unchanged
   }
 
+  // Put the modified data back to the canvas
   ctx.putImageData(imageData, 0, 0);
 }
 
@@ -42,10 +54,11 @@ export default function AddNoise({ imageFile, setImageUrl, trigger }) {
 
         originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-        addUniformNoise(50, originalImageData, ctx);
+        addSaltAndPepperNoise(0.05, originalImageData, ctx);
 
-        const newDataUrl = canvas.toDataURL("image/jpeg", 0.95);
-        const newDataUrl = canvas.toDataURL("image/png", 0.95);
+        const fileType =
+          imageFile.type === "image/png" ? "image/png" : "image/jpeg";
+        const newDataUrl = canvas.toDataURL(fileType, 0.95);
 
         setImageUrl(newDataUrl);
       };

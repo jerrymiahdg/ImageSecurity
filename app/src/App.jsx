@@ -1,11 +1,13 @@
 import { useState } from "react";
 import RemoveMetaData from "./RemoveMetadata";
+import AddNoise from "./AddNoise";
 
 const App = () => {
   const [dropdownShowing, setDropdownShowing] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [triggerProcess, setTriggerProcess] = useState(false);
+  const [noiseTrigPro, setNoiseTrigPro] = useState(false);
   const toggleDropdown = () => {
     setDropdownShowing((state) => !state);
   };
@@ -62,10 +64,21 @@ const App = () => {
                     </button>
                   </>
                 )}
-
-                <button className="rounded-md p-3 bg-white/50">
-                  add noise
-                </button>
+                {imageFile && (
+                  <>
+                    <AddNoise
+                      imageFile={imageFile}
+                      setImageUrl={setImageUrl}
+                      trigger={noiseTrigPro}
+                    />
+                    <button
+                      className="mt-4 p-3 rounded bg-blue-500 text-white"
+                      onClick={() => setNoiseTrigPro((prev) => !prev)}
+                    >
+                      Add Noise
+                    </button>
+                  </>
+                )}
                 <button className="rounded-md p-3 bg-white/50">
                   add noise
                 </button>
