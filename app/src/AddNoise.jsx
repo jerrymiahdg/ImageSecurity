@@ -1,5 +1,25 @@
 import { useEffect, useRef } from "react";
 
+//vignette for separate vignette function
+const addVignette = (ctx, width, height, intensity = 0.7) => {
+  const gradient = ctx.createRadialGradient(
+    width / 2,
+    height / 2,
+    0, // Center of the circle (x, y, radius)
+    width / 2,
+    height / 2,
+    Math.max(width, height) / 1.5 // Outer circle radius
+  );
+
+  // Add stops to the gradient: transparent in the center, dark at the edges.
+  gradient.addColorStop(0, "rgba(0, 0, 0, 0)"); // Center: transparent
+  gradient.addColorStop(1, `rgba(0, 0, 0, ${intensity})`); // Edges: black with opacity
+
+  // Fill the canvas with the gradient
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+};
+
 function addSaltAndPepperNoise(intensity = 0.05, originalImageData, ctx) {
   if (!originalImageData) return;
 
@@ -59,7 +79,8 @@ export default function AddNoise({ imageFile, setImageUrl, trigger }) {
           canvas.height
         );
 
-        addSaltAndPepperNoise(0.01, originalImageData, ctx);
+        addSaltAndPepperNoise(0.2, originalImageData, ctx);
+        // addVignette(ctx, canvas.width, canvas.height);
 
         const fileType =
           imageFile.type === "image/png" ? "image/png" : "image/jpeg";

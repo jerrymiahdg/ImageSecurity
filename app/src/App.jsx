@@ -1,6 +1,7 @@
 import { useState } from "react";
 import RemoveMetaData from "./RemoveMetadata";
 import AddNoise from "./AddNoise";
+import DraggableImage from "./DraggableImage";
 
 const App = () => {
   const [dropdownShowing, setDropdownShowing] = useState(false);
@@ -21,6 +22,7 @@ const App = () => {
     reader.onload = (event) => setImageUrl(event.target.result);
     reader.readAsDataURL(file);
   };
+
   return (
     <div className=" text-black/55 bg-yellow-500/25 font-ls flex flex-col items-center w-lg w-full p-10 gap-10">
       <h1 className="text-5xl font-bold font-ss">ImageSecurity</h1>
@@ -39,6 +41,7 @@ const App = () => {
             className="mt-4 max-w-full max-h-64 rounded-md"
           />
         )}
+
         <div className="flex w-full justify-between">
           <div className="flex flex-col w-full gap-2">
             <button
