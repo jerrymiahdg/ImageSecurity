@@ -5,6 +5,7 @@ const App = () => {
   const [dropdownShowing, setDropdownShowing] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  const [triggerProcess, setTriggerProcess] = useState(false);
   const toggleDropdown = () => {
     setDropdownShowing((state) => !state);
   };
@@ -46,21 +47,21 @@ const App = () => {
             </button>
             {dropdownShowing && (
               <div className="flex flex-col gap-2 p-2 bg-white/40 rounded-md transition-all">
-                {/*
-                <button
-                  className="rounded-md p-3 bg-white/50"
-                  onClick={() =>
-                    imageFile && (
-                      <RemoveMetaData
-                        imageFile={imageFile}
-                        setImageUrl={setImageUrl}
-                      />
-                    )
-                  }
-                >
-                  remove metadata
-                </button>
-                */}
+                {imageFile && (
+                  <>
+                    <RemoveMetaData
+                      imageFile={imageFile}
+                      setImageUrl={setImageUrl}
+                      trigger={triggerProcess}
+                    />
+                    <button
+                      className="mt-4 p-3 rounded bg-blue-500 text-white"
+                      onClick={() => setTriggerProcess((prev) => !prev)}
+                    >
+                      Remove Metadata
+                    </button>
+                  </>
+                )}
 
                 <button className="rounded-md p-3 bg-white/50">
                   add noise
